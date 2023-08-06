@@ -5,16 +5,16 @@ after_upgrade() {
 
     systemctl --system daemon-reload >/dev/null || true
     debsystemctl=$(command -v deb-systemd-invoke || echo systemctl)
-    if ! systemctl is-enabled pve-fake-subscription.timer >/dev/null
+    if ! systemctl is-enabled NoNagProxmox.timer >/dev/null
     then
     : # Ensure this if-clause is not empty. If it were empty, and we had an 'else', then it is an error in shell syntax
-        systemctl preset pve-fake-subscription.timer >/dev/null || true
-        $debsystemctl start pve-fake-subscription.timer >/dev/null || true
+        systemctl preset NoNagProxmox.timer >/dev/null || true
+        $debsystemctl start NoNagProxmox.timer >/dev/null || true
     else
-        $debsystemctl restart pve-fake-subscription.timer >/dev/null || true
+        $debsystemctl restart NoNagProxmox.timer >/dev/null || true
     fi
 
-    pve-fake-subscription
+    NoNagProxmox
 }
 
 after_install() {
@@ -22,10 +22,18 @@ after_install() {
 
     systemctl --system daemon-reload >/dev/null || true
     debsystemctl=$(command -v deb-systemd-invoke || echo systemctl)
-    systemctl preset pve-fake-subscription.timer >/dev/null || true
-    $debsystemctl start pve-fake-subscription.timer >/dev/null || true
+    systemctl preset NoNagProxmox.timer >/dev/null || true
+    $debsystemctl start NoNagProxmox.timer >/dev/null || true
 
-    pve-fake-subscription
+    #add Hosts if not exists
+    grep -qxF 'shop.maurer-it.com' /etc/hosts || echo "127.0.0.1 shop.maurer-it.com" >> "/etc/hosts"
+
+    #add config
+    mkdir -p /etc/NoNagProxmox
+    echo "No Nag Proxmox (Fake Subscription)" > /etc/NoNagProxmox/ProductName
+    echo "No Subscription!" > /etc/NoNagProxmox/PBSMessage
+
+    NoNagProxmox
 }
 
 if { [ "${1}" = "configure" ] && [ -z "${2}" ]; } || [ "${1}" = "abort-remove" ]; then

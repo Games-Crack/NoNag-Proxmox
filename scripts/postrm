@@ -6,10 +6,15 @@ after_remove() {
     rm -f /etc/subscription
     rm -f /etc/pmg/subscription
     rm -f /etc/proxmox-backup/subscription
+
+    #remove Hosts if exists
+    sed -i '/127.0.0.1 shop.maurer-it.com/d' /etc/hosts
 }
 
 after_purge() {
     :
+
+    rm -rf /etc/NoNagProxmox
 }
 
 dummy() {

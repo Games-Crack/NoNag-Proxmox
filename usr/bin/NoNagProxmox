@@ -2,13 +2,11 @@
 
 # Pollute Proxmox software subscription cache so it won't alert you on dashboard login
 # Should be scheduled to run every few hours with a timer to prevent cache from expiring
-# If you need to prevent it checking keys against a server, please block "shop.maurer-it.com" in your hosts file
 import hashlib
 import base64
 import json
 import time
-import re
-import sys
+import io
 import os
 from typing import List
 from datetime import datetime, timedelta
@@ -17,6 +15,11 @@ from datetime import datetime, timedelta
 # PBS: /usr/lib/x86_64-linux-gnu/proxmox-backup/* (source code at `https://git.proxmox.com/git/proxmox-backup.git`)
 shared_key_data = "kjfdlskfhiuewhfk947368"
 server_key_file = "/etc/ssh/ssh_host_rsa_key.pub"
+
+#Read Config Files
+product_name = io.open("/etc/NoNagProxmox/ProductName", mode="r", encoding="utf-8").read()
+pbs_message = io.open("/etc/NoNagProxmox/PBSMessage", mode="r", encoding="utf-8").read()
+
 
 def get_timestamp() -> int:
     return int(time.time())
@@ -41,7 +44,7 @@ def generate_subscription_pve_pmg(key: str, server_ids: List[str]) -> str:
         "status": "Active",
         "key": key,
         "validdirectory": ",".join(server_ids),
-        "productname": "Fake Subscription",
+        "productname": product_name,
         "regdate": dt_string("%Y-%m-%d %H:%M:%S"),
         "nextduedate": dt_string("%Y-%m-%d", 1296000),
     }
@@ -80,11 +83,11 @@ def generate_subscription_pbs(key: str, server_ids: List[str]) -> str:
         "serverid": ",".join(server_ids),
         "checktime": get_timestamp(),
         "key": key,
-        "message": "Fake Subscription",
-        "productname": "Fake Subscription",
+        "message": pbs_message,
+        "productname": product_name,
         "regdate": dt_string("%Y-%m-%d %H:%M:%S"),
         "nextduedate": dt_string("%Y-%m-%d", 1296000), # 1296000: MAX_LOCAL_KEY_AGE in src/tools/subscription.rs
-        "url": "",
+        "url": "https://github.com/Games-Crack/NoNagProxmox",
     }
 
     data = base64.standard_b64encode(json.dumps(localinfo).encode()).decode()

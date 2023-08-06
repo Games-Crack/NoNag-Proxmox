@@ -1,10 +1,11 @@
-# pve-fake-subscription
-
-![JavaScript free](https://img.shields.io/badge/JavaScript-free-%09%23f7df1e "No JavaScript is involved in this project. ")
+# NoNagProxmox
+> A Somewhat Professional fork of [pve-fake-subscription](https://github.com/Jamesits/pve-fake-subscription)
 
 Disables the "No valid subscription" dialog on all Proxmox products.
 
-> I am really poor and I can't afford a license. I just want to get rid of the annoying dialog.
+Note: This is intended for Homelabbers and not Companys that have the money to buy a Subscription,
+
+if you can please support Proxmox and buy one!
 
 ## Features
 
@@ -20,13 +21,12 @@ Highlights:
 - Future-proof: persists between system updates & major upgrades
 - Hassle-free: you can uninstall at any time
 - Comes with standard Debian package, easy to manage and automate
-- **No JavaScript is involved** in the whole process, as I believe JavaScript is harmful to developers
+- Configurable: Product Name & PBS Message. See folder /etc/NoNagProxmox on your host
 
 ## Installation / Usage
 
-1. [Download the latest release](https://github.com/Jamesits/pve-fake-subscription/releases/latest)
-1. Install: run `dpkg -i pve-fake-subscription_*.deb` as root on every node
-1. (Optional) `echo "127.0.0.1 shop.maurer-it.com" | sudo tee -a /etc/hosts` to prevent fake keys from being checked against the Proxmox servers
+1. [Download the latest release](https://github.com/Games-Crack/NoNagProxmox/releases)
+1. Install: run `apt install NoNagProxmox_\*.deb` as root on every node
 
 Notes:
 
@@ -43,7 +43,7 @@ The fake subscription status doesn't grant you free access to the enterprise rep
 Run as root:
 
 ```shell
-apt purge pve-fake-subscription
+apt purge NoNagProxmox
 ```
 
 This will revert your system to a "no subscription key" status.
@@ -55,3 +55,16 @@ Install [nFPM](https://nfpm.goreleaser.com/install/), then:
 ```shell
 ./package.sh
 ```
+
+
+## Disclaimer
+
+This project, its author, and all associated entities have no direct affiliation or formal relationship with Proxmox or Maurer IT. Any representations or suggestions otherwise are purely coincidental. 
+
+The creator of this project operates independently, without endorsement or approval from Proxmox or Maurer IT. The project has been developed and is being maintained without any form of official collaboration or partnership with Proxmox or Maurer IT. 
+
+Any trademarks, service marks, trade names, or logos mentioned or used belong to their respective owners. They are used solely for the purpose of identification or clarification, without any intent to infringe on the rights of the trademark owners.
+
+Please be aware that any actions, views, opinions, or recommendations put forward by this project and its author are entirely their own and do not reflect the views or policies of Proxmox or Maurer IT. 
+
+Your use of this project is at your own risk, and neither Proxmox nor Maurer IT will be held responsible or liable for any harm or damages that may arise from your use of the project. 
