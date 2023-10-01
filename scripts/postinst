@@ -25,8 +25,8 @@ after_install() {
     systemctl preset NoNagProxmox.timer >/dev/null || true
     $debsystemctl start NoNagProxmox.timer >/dev/null || true
 
-    #add Hosts if not exists
-    grep -qxF 'shop.maurer-it.com' /etc/hosts || echo "127.0.0.1 shop.maurer-it.com" >> "/etc/hosts"
+    #add Hosts if it not exists
+    grep -Fim1 shop.maurer-it.com /etc/hosts &>/dev/null || echo -e "\n# Added by NoNagProxmox\n127.0.0.1\tshop.maurer-it.com\n" >>/etc/hosts
 
     #add config
     mkdir -p /etc/NoNagProxmox
