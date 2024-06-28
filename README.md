@@ -13,12 +13,12 @@ Works for:
 
 - Proxmox VE (5.x or later, tested up to 8.x)
 - Proxmox Mail Gateway (5.x or later)
-- Proxmox Backup Server (1.x)
+- Proxmox Backup Server (1.x or later, tested up to 3.x)
 
 Highlights:
 
 - Non-intrusive: zero modification of any system file
-- Future-proof: persists between system updates & major upgrades
+- Future-proof: persists between system updates & major upgrades, as long as Proxmox doesnt change the license system.
 - Hassle-free: you can uninstall at any time
 - Comes with standard Debian package, easy to manage and automate
 - Configurable: Product Name & PBS Message. See folder /etc/NoNagProxmox on your host
@@ -40,21 +40,21 @@ The fake subscription status doesn't grant you free access to the enterprise rep
 
 ## Uninstallation
 
-Run as root:
+Like any other debian package you can uninstall it easily.
 
 ```shell
 apt purge NoNagProxmox
+# or
+apt remove NoNagProxmox
 ```
 
-This will revert your system to a "no subscription key" status.
+You Are Done!
+
+Note: This will revert your system to a "no subscription key" status.
 
 ## Building the Package
 
-Install [nFPM](https://nfpm.goreleaser.com/install/), then:
-
-```shell
-./package.sh
-```
+Install [nFPM](https://nfpm.goreleaser.com/install/), then run: ``./package.sh``
 
 
 ## Disclaimer
